@@ -1,13 +1,15 @@
 package com.nanlagger.main.ui;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by NaNLagger on 19.03.15.
  *
  * @author Stepan Lyashenko
  */
-public class MainForm {
+public class MainForm extends JFrame {
     private JTextField a0TextField;
     private JButton sqrButton;
     private JButton revButton;
@@ -33,4 +35,21 @@ public class MainForm {
     private JButton mButton;
     private JButton BSButton;
     private JButton CLButton;
+    private JPanel mainPanel;
+
+    public MainForm() {
+        super();
+        setTitle("Калькулейтэд!!!");
+        setContentPane(mainPanel);
+        setSize(240, 300);
+        setVisible(true);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.exit(0);
+            }
+        });
+    }
 }
