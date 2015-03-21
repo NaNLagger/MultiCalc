@@ -9,12 +9,12 @@ import com.nanlagger.main.entities.MyNumber;
  */
 public class TProc<T extends MyNumber> {
     public static final int TPROC_NONE = 0;
-    public static final int TPROC_ADD = 1;
-    public static final int TPROC_SUB = 2;
-    public static final int TPROC_Mul = 3;
-    public static final int TPROC_Dvd = 4;
-    public static final int TPROC_REV = 5;
-    public static final int TPROC_SQR = 6;
+    public static final int TPROC_ADD = 12;
+    public static final int TPROC_SUB = 13;
+    public static final int TPROC_Mul = 14;
+    public static final int TPROC_Dvd = 15;
+    public static final int TPROC_REV = 16;
+    public static final int TPROC_SQR = 17;
     protected T lop_res;
     protected T rop;
     protected int operation;
