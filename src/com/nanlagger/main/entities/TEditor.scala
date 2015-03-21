@@ -7,7 +7,6 @@ package com.nanlagger.main.entities
 class TEditor {
   private val DEFAULT_NULL = "0"
   private val DEFAULT_DEL = "/"
-  var fState = false;
 
   private var dem: String = DEFAULT_NULL
 
@@ -35,7 +34,6 @@ class TEditor {
   def read: String = dem
 
   def edit(a: Int): String = {
-    if(!fState) clear(); fState = true
     a match {
       case 0 =>
         addZero
