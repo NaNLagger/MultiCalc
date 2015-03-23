@@ -94,6 +94,9 @@ public class TFrac implements MyNumber<TFrac> {
 
     @Override
     public String toString() {
+        if (b == 1) {
+            return String.valueOf(a);
+        }
         return (a + "/" + b);
     }
 
@@ -126,7 +129,7 @@ public class TFrac implements MyNumber<TFrac> {
     }
 
     @Override
-    public void reverse(TFrac right) {
+    public void reverse() {
         TFrac temp = new TFrac(this.b, this.a);
         this.a = temp.a;
         this.b = temp.b;

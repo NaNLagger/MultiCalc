@@ -15,8 +15,10 @@ object Commands {
   val SQR = 17
   val CL = 18
   val BS = 19
-  val MC = 20
-  val MR = 21
-  val MS = 22
-  val MP = 23
+  val CZ = 20
+  val CE = 21
+  val MC = 22
+  val MR = 23
+  val MS = 24
+  val MP = 25
 }

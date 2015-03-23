@@ -46,6 +46,7 @@ public class TProc<T extends MyNumber> {
                 lop_res.div(rop);
                 break;
             default:
+                lop_res = (T) rop.copy();
                 break;
         }
     }
@@ -53,10 +54,10 @@ public class TProc<T extends MyNumber> {
     public void runFunction(int function) {
         switch (function) {
             case TPROC_REV:
-                lop_res.reverse(rop);
+                rop.reverse();
                 break;
             case TPROC_SQR:
-                lop_res.sqr();
+                rop.sqr();
                 break;
             default:
                 break;

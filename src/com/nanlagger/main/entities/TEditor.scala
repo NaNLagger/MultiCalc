@@ -29,9 +29,19 @@ class TEditor {
     }
   }
 
+  private def changeZnak {
+    if (dem.charAt(0) == '-') {
+      dem = dem.substring(1)
+    }
+    else {
+      if (!dem.equals(DEFAULT_NULL)) dem = "-" + dem
+    }
+  }
+
   private def clear() = dem = DEFAULT_NULL
 
   def read: String = dem
+  def write(str: String): Unit = dem = str;
 
   def edit(a: Int): String = {
     a match {
@@ -43,6 +53,8 @@ class TEditor {
         backSpace
       case Commands.CL =>
         clear
+      case Commands.CZ =>
+        changeZnak
       case _ =>
         addDem(a)
     }

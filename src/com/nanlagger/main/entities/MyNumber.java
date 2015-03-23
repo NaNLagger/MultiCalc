@@ -15,7 +15,7 @@ public interface MyNumber<T> {
 
     public void div(T right);
 
-    public void reverse(T right);
+    public void reverse();
 
     public void sqr();
 

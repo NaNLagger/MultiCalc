@@ -42,6 +42,8 @@ public class MainForm extends JFrame {
     private JButton CLButton;
 
     private JPanel mainPanel;
+    private JButton czButton;
+    private JButton CEButton;
 
     private JMenuBar topMenu = new JMenuBar();
 
@@ -88,6 +90,8 @@ public class MainForm extends JFrame {
         arrayButtons.add(Commands.SQR(), sqrButton);
         arrayButtons.add(Commands.CL(), CLButton);
         arrayButtons.add(Commands.BS(), BSButton);
+        arrayButtons.add(Commands.CZ(), czButton);
+        arrayButtons.add(Commands.CE(), CEButton);
         arrayButtons.add(Commands.MC(), MCButton);
         arrayButtons.add(Commands.MR(), MRButton);
         arrayButtons.add(Commands.MS(), MSButton);
