@@ -9,8 +9,7 @@ public class TMemory<T extends MyNumber> {
     protected T fNumber;
     protected boolean fState;
 
-    public TMemory(T obj) {
-        fNumber = obj;
+    public TMemory() {
         fState = false;
     }
 
@@ -28,10 +27,11 @@ public class TMemory<T extends MyNumber> {
     }
 
     public void clear() {
+        this.fState = false;
         fNumber = null;
     }
 
-    public String getState() {
-        return fState ? "On" : "Off";
+    public boolean getState() {
+        return fState;
     }
 }

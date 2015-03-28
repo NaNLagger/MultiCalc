@@ -1,6 +1,6 @@
 package com.nanlagger.main.controllers
 
-import com.nanlagger.main.entities.{Commands, TFrac, TEditor}
+import com.nanlagger.main.entities._
 
 
 /**
@@ -11,6 +11,8 @@ object Controller {
   private type WorkType = TFrac
   private val editor = new TEditor
   private val proc = new TProc[WorkType]
+  private val memory = new TMemory[WorkType]
+  private val clipboard = new ClipBoard
   private var ctrlState = TCtrlState.cStart
 
   def doCommand(command: Int): String = {
@@ -20,7 +22,18 @@ object Controller {
       case x if(x >= Commands.PLUS && x <= Commands.DIV) => runOperation(x)
       case x if(x == Commands.REV || x == Commands.SQR) => runFunction(x)
       case Commands.RESULT => runResult()
-      //case _ => editor.read
+      case x if(x >= Commands.MC && x<= Commands.MP) => runMemory(x)
+      case _ => editor.read
+    }
+  }
+
+  def runMemory(command: Int): String = {
+    command match {
+      case Commands.MC => memory.clear(); editor.read
+      case Commands.MS => memory.setMemory(new WorkType(editor.read)); editor.read
+      case Commands.MP if(memory.getState) => memory.add(new WorkType(editor.read)); editor.read
+      case Commands.MR if(memory.getState) => editor.write(memory.getMemory.toString); editor.read
+      case _ => editor.read
     }
   }
 
@@ -37,8 +50,6 @@ object Controller {
       case TCtrlState.cExpDone => {
         ctrlState = TCtrlState.cEditing
         editor.edit(Commands.CL)
-        proc.resetProc()
-        ctrlState = TCtrlState.cStart
         editor.edit(command)
       }
       case TCtrlState.cStart => {
@@ -61,30 +72,35 @@ object Controller {
         proc.setLop_res(new WorkType(editor.read))
         proc.setOperation(command)
         ctrlState = TCtrlState.cOpChange
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.cExpDone => {
         proc.setOperation(command)
         ctrlState = TCtrlState.cOpChange
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.cOpChange => {
         proc.setOperation(command)
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.cEditing => {
         proc.setRop(new WorkType(editor.read))
         proc.runOperation()
         proc.setOperation(command)
         ctrlState = TCtrlState.cExpDone
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.FunDone => {
         proc.setRop(new WorkType(editor.read))
         proc.runOperation()
         proc.setOperation(command)
         ctrlState = TCtrlState.cExpDone
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case _ => editor.read
     }
@@ -96,14 +112,14 @@ object Controller {
         proc.setRop(new WorkType(editor.read))
         proc.runFunction(command)
         editor.write(proc.getRop.toString)
-        //ctrlState = TCtrlState.FunDone
-        proc.getRop.toString
+        editor.read
       }
       case TCtrlState.cEditing => {
         proc.setRop(new WorkType(editor.read))
         proc.runFunction(command)
         ctrlState = TCtrlState.FunDone
-        proc.getRop.toString
+        editor.write(proc.getRop.toString)
+        editor.read
       }
       case TCtrlState.cExpDone => {
         editor.write(proc.getLop_res.toString)
@@ -112,7 +128,7 @@ object Controller {
         proc.runFunction(command)
         editor.write(proc.getRop.toString)
         ctrlState = TCtrlState.cStart
-        proc.getRop.toString
+        editor.read
       }
       case _ => editor.read
     }
@@ -124,27 +140,40 @@ object Controller {
         proc.setRop(new WorkType(editor.read))
         proc.runOperation()
         ctrlState = TCtrlState.cExpDone
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.cExpDone => {
         proc.runOperation()
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.cOpChange => {
         proc.setRop(proc.getLop_res)
         proc.runOperation()
         ctrlState = TCtrlState.cExpDone
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case TCtrlState.FunDone => {
         proc.setRop(new WorkType(editor.read))
         proc.runOperation()
         ctrlState = TCtrlState.cExpDone
-        proc.getLop_res.toString
+        editor.write(proc.getLop_res.toString)
+        editor.read
       }
       case _ => editor.read
     }
   }
+
+  def clipboardCommand(command: String): String = {
+    command match {
+      case "copy" => clipboard.setData(editor.read); editor.read
+      case "insert" => editor.write(clipboard.getData()); editor.read
+    }
+  }
+
+  def getStateMemory = if(memory.getState) "On" else "Off"
 
   private object TCtrlState extends Enumeration {
     val cStart, cEditing, FunDone, cValDone, cExpDone, cOpChange, cError = Value

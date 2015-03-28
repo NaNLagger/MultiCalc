@@ -44,6 +44,7 @@ public class MainForm extends JFrame {
     private JPanel mainPanel;
     private JButton czButton;
     private JButton CEButton;
+    private JLabel memoryLabel;
 
     private JMenuBar topMenu = new JMenuBar();
 
@@ -107,20 +108,21 @@ public class MainForm extends JFrame {
     public void initTopMenu() {
         setJMenuBar(topMenu);
         requestFocus();
-        JMenu file = new JMenu("<html><u>Ф</u>айл</html>");
-        JMenuItem exit = new JMenuItem("Выход");
-        JMenuItem help = new JMenuItem("Справка");
+        JMenu file = new JMenu("<html><u>П</u>равка</html>");
+        JMenuItem copy = new JMenuItem("Копировать");
+        JMenuItem insert = new JMenuItem("Вставить");
+        JMenuItem settings = new JMenuItem("<html><u>Н</u>астройки</html>");
         JMenuItem history = new JMenuItem("<html><u>И</u>стория</html>");
+        file.add(copy);
+        file.add(insert);
         topMenu.add(file);
+        topMenu.add(settings);
         topMenu.add(history);
-        file.add(help);
-        file.addSeparator();
-        file.add(exit);
 
-        file.setMnemonic(KeyEvent.VK_A);
-        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, Event.CTRL_MASK));
-        help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
-        history.setMnemonic(KeyEvent.VK_B);
+        copy.setActionCommand("copy");
+        insert.setActionCommand("insert");
+        copy.addActionListener(topMenuButtonClick);
+        insert.addActionListener(topMenuButtonClick);
 
         //exit.addActionListener(exitListener);
         //help.addActionListener(helpListener);
@@ -135,7 +137,19 @@ public class MainForm extends JFrame {
         }
     };
 
+    private ActionListener topMenuButtonClick = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            if(actionEvent.getActionCommand().equals("copy") || actionEvent.getActionCommand().equals("insert")) {
+                resTextField.setText(Controller.clipboardCommand(actionEvent.getActionCommand()));
+            }
+        }
+    };
+
     private void doCommand(int command) {
         resTextField.setText(Controller.doCommand(command));
+        if(command >= Commands.MC() && command<= Commands.MP()) {
+            memoryLabel.setText("Memory: " + Controller.getStateMemory());
+        }
     }
 }
