@@ -8,6 +8,8 @@ class TEditor {
   private val DEFAULT_NULL = "0"
   private val DEFAULT_DEL = "/"
 
+  var flagView: Boolean = false
+
   private var dem: String = DEFAULT_NULL
 
   private def addDem(a: Int) = {
@@ -40,7 +42,16 @@ class TEditor {
 
   private def clear() = dem = DEFAULT_NULL
 
-  def read: String = dem
+  def read: String = {
+    if(flagView) {
+      if (!dem.contains(DEFAULT_DEL))
+        dem += DEFAULT_DEL + "1"
+    } else {
+      if (dem.contains(DEFAULT_DEL + "1"))
+        dem = dem.substring(0, dem.length - 2)
+    }
+    dem
+  }
   def write(str: String): Unit = dem = str;
 
   def edit(a: Int): String = {

@@ -4,7 +4,6 @@ import com.nanlagger.main.controllers.Controller;
 import com.nanlagger.main.entities.Commands;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -111,18 +110,28 @@ public class MainForm extends JFrame {
         JMenu file = new JMenu("<html><u>П</u>равка</html>");
         JMenuItem copy = new JMenuItem("Копировать");
         JMenuItem insert = new JMenuItem("Вставить");
-        JMenuItem settings = new JMenuItem("<html><u>Н</u>астройки</html>");
+        JMenu settings = new JMenu("<html><u>Н</u>астройки</html>");
+        JMenu view = new JMenu("Вид");
+        JMenuItem viewVar1 = new JMenuItem("Целое");
+        JMenuItem viewVar2 = new JMenuItem("Дробное");
         JMenuItem history = new JMenuItem("<html><u>И</u>стория</html>");
         file.add(copy);
         file.add(insert);
         topMenu.add(file);
         topMenu.add(settings);
+        settings.add(view);
+        view.add(viewVar1);
+        view.add(viewVar2);
         topMenu.add(history);
 
         copy.setActionCommand("copy");
         insert.setActionCommand("insert");
         copy.addActionListener(topMenuButtonClick);
         insert.addActionListener(topMenuButtonClick);
+        viewVar1.setActionCommand("var1");
+        viewVar2.setActionCommand("var2");
+        viewVar1.addActionListener(topMenuButtonClick);
+        viewVar2.addActionListener(topMenuButtonClick);
 
         //exit.addActionListener(exitListener);
         //help.addActionListener(helpListener);
@@ -142,6 +151,12 @@ public class MainForm extends JFrame {
         public void actionPerformed(ActionEvent actionEvent) {
             if(actionEvent.getActionCommand().equals("copy") || actionEvent.getActionCommand().equals("insert")) {
                 resTextField.setText(Controller.clipboardCommand(actionEvent.getActionCommand()));
+            }
+            if(actionEvent.getActionCommand().equals("var1")) {
+                resTextField.setText(Controller.changeState(false));
+            }
+            if(actionEvent.getActionCommand().equals("var2")) {
+                resTextField.setText(Controller.changeState(true));
             }
         }
     };

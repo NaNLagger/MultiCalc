@@ -173,6 +173,11 @@ object Controller {
     }
   }
 
+  def changeState(boolean: Boolean): String = {
+    editor.flagView = boolean
+    editor.read
+  }
+
   def getStateMemory = if(memory.getState) "On" else "Off"
 
   private object TCtrlState extends Enumeration {
