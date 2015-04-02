@@ -132,11 +132,15 @@ public class MainForm extends JFrame {
         viewVar2.setActionCommand("var2");
         viewVar1.addActionListener(topMenuButtonClick);
         viewVar2.addActionListener(topMenuButtonClick);
-
-        //exit.addActionListener(exitListener);
-        //help.addActionListener(helpListener);
-        //history.addActionListener(historyListener);
+        history.addActionListener(historyListener);
     }
+
+    private ActionListener historyListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            new History();
+        }
+    };
 
     private ActionListener speedButtonClick = new ActionListener() {
         @Override

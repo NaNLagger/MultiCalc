@@ -21,4 +21,6 @@ object Commands {
   val MR = 23
   val MS = 24
   val MP = 25
+  val GET_HISTORY = 26
+  val CLEAR_HISTORY = 27
 }
