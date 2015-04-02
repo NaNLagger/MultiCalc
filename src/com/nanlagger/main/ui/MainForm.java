@@ -114,7 +114,6 @@ public class MainForm extends JFrame {
         JMenu view = new JMenu("Вид");
         JMenuItem viewVar1 = new JMenuItem("Целое");
         JMenuItem viewVar2 = new JMenuItem("Дробное");
-        JMenuItem history = new JMenuItem("<html><u>И</u>стория</html>");
         file.add(copy);
         file.add(insert);
         topMenu.add(file);
@@ -122,7 +121,6 @@ public class MainForm extends JFrame {
         settings.add(view);
         view.add(viewVar1);
         view.add(viewVar2);
-        topMenu.add(history);
 
         copy.setActionCommand("copy");
         insert.setActionCommand("insert");
@@ -132,10 +130,6 @@ public class MainForm extends JFrame {
         viewVar2.setActionCommand("var2");
         viewVar1.addActionListener(topMenuButtonClick);
         viewVar2.addActionListener(topMenuButtonClick);
-
-        //exit.addActionListener(exitListener);
-        //help.addActionListener(helpListener);
-        //history.addActionListener(historyListener);
     }
 
     private ActionListener speedButtonClick = new ActionListener() {
