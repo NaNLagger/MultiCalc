@@ -23,6 +23,11 @@ public class TMemory<T extends MyNumber> {
     }
 
     public void add(T number) {
+        if(!fState) {
+            this.fState = true;
+            this.fNumber = (T) number.copy();
+            return;
+        }
         fNumber.sum(number);
     }
 

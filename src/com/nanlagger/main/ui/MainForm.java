@@ -88,10 +88,10 @@ public class MainForm extends JFrame {
         arrayButtons.add(Commands.DIV(), divButton);
         arrayButtons.add(Commands.REV(), revButton);
         arrayButtons.add(Commands.SQR(), sqrButton);
-        arrayButtons.add(Commands.CL(), CLButton);
+        arrayButtons.add(Commands.CL(), CEButton);
         arrayButtons.add(Commands.BS(), BSButton);
         arrayButtons.add(Commands.CZ(), czButton);
-        arrayButtons.add(Commands.CE(), CEButton);
+        arrayButtons.add(Commands.CE(), CLButton);
         arrayButtons.add(Commands.MC(), MCButton);
         arrayButtons.add(Commands.MR(), MRButton);
         arrayButtons.add(Commands.MS(), MSButton);

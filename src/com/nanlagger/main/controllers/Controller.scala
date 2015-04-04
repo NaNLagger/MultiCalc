@@ -31,8 +31,8 @@ object Controller {
     command match {
       case Commands.MC => memory.clear(); editor.read
       case Commands.MS => memory.setMemory(new WorkType(editor.read)); editor.read
-      case Commands.MP if(memory.getState) => memory.add(new WorkType(editor.read)); editor.read
-      case Commands.MR if(memory.getState) => editor.write(memory.getMemory.toString); editor.read
+      case Commands.MP => memory.add(new WorkType(editor.read)); editor.read
+      case Commands.MR if(memory.getState) => ctrlState = TCtrlState.cEditing; editor.write(memory.getMemory.toString); editor.read
       case _ => editor.read
     }
   }
