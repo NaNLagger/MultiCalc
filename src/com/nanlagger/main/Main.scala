@@ -9,7 +9,7 @@ import com.nanlagger.main.ui.MainForm
  * @author Stepan Lyashenko
  */
 object Main extends App {
-  UIManager.getInstalledLookAndFeels.find(_.getName == "Nimbus").headOption match {
+  UIManager.getInstalledLookAndFeels.find(_.getName == "GTK+").headOption match {
     case Some(info) => UIManager.setLookAndFeel(info.getClassName)
     case None => UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName)
   }

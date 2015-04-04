@@ -55,7 +55,7 @@ public class MainForm extends JFrame {
         setContentPane(mainPanel);
         initButton();
         initTopMenu();
-        setSize(240, 300);
+        setSize(340, 300);
         setVisible(true);
 
         this.addWindowListener(new WindowAdapter() {
