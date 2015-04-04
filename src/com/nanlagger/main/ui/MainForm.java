@@ -44,6 +44,7 @@ public class MainForm extends JFrame {
     private JButton czButton;
     private JButton CEButton;
     private JLabel memoryLabel;
+    private JTextField errorField;
 
     private JMenuBar topMenu = new JMenuBar();
 
@@ -55,7 +56,7 @@ public class MainForm extends JFrame {
         setContentPane(mainPanel);
         initButton();
         initTopMenu();
-        setSize(240, 300);
+        setSize(240, 350);
         setVisible(true);
 
         this.addWindowListener(new WindowAdapter() {
@@ -102,6 +103,7 @@ public class MainForm extends JFrame {
             arrayButtons.get(i).setFocusable(false);
             arrayButtons.get(i).addActionListener(speedButtonClick);
         }
+        errorField.setFocusable(false);
     }
 
     public void initTopMenu() {
@@ -156,9 +158,14 @@ public class MainForm extends JFrame {
     };
 
     private void doCommand(int command) {
-        resTextField.setText(Controller.doCommand(command));
-        if(command >= Commands.MC() && command<= Commands.MP()) {
-            memoryLabel.setText("Memory: " + Controller.getStateMemory());
+        try {
+            resTextField.setText(Controller.doCommand(command));
+            if (command >= Commands.MC() && command <= Commands.MP()) {
+                memoryLabel.setText("Memory: " + Controller.getStateMemory());
+            }
+            errorField.setText("");
+        } catch (Exception e) {
+            errorField.setText(e.getMessage());
         }
     }
 }

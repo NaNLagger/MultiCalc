@@ -169,7 +169,7 @@ object Controller {
   def clipboardCommand(command: String): String = {
     command match {
       case "copy" => clipboard.setData(editor.read); editor.read
-      case "insert" => editor.write(clipboard.getData()); editor.read
+      case "insert" => ctrlState = TCtrlState.cEditing; editor.write(clipboard.getData()); editor.read
     }
   }
 

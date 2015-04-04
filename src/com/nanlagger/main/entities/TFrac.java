@@ -17,7 +17,7 @@ public class TFrac implements MyNumber<TFrac> {
 
     public TFrac(Integer a, Integer b) {
         if(b == 0) {
-            throw new IllegalArgumentException("Second argument can't be zero");
+            throw new IllegalArgumentException("Denominator can't be zero");
         }
         int del = euclid(a, b);
         this.a = a/del;
