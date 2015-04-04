@@ -44,6 +44,7 @@ public class MainForm extends JFrame {
     private JButton czButton;
     private JButton CEButton;
     private JLabel memoryLabel;
+    private JTextField errorField;
 
     private JMenuBar topMenu = new JMenuBar();
 
