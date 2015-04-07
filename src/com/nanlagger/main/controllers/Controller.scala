@@ -14,6 +14,7 @@ object Controller {
   private val memory = new TMemory[WorkType]
   private val clipboard = new ClipBoard
   private var ctrlState = TCtrlState.cStart
+  private val history = new THistory
 
   def doCommand(command: Int): String = {
     command match {
@@ -23,6 +24,8 @@ object Controller {
       case x if(x == Commands.REV || x == Commands.SQR) => runFunction(x)
       case Commands.RESULT => runResult()
       case x if(x >= Commands.MC && x<= Commands.MP) => runMemory(x)
+      case Commands.GET_HISTORY => history.toString()
+      case Commands.CLEAR_HISTORY => history.clear()
       case _ => editor.read
     }
   }
@@ -88,7 +91,7 @@ object Controller {
       }
       case TCtrlState.cEditing => {
         proc.setRop(new WorkType(editor.read))
-        proc.runOperation()
+        saveOperation()
         proc.setOperation(command)
         ctrlState = TCtrlState.cExpDone
         editor.write(proc.getLop_res.toString)
@@ -96,7 +99,7 @@ object Controller {
       }
       case TCtrlState.FunDone => {
         proc.setRop(new WorkType(editor.read))
-        proc.runOperation()
+        saveOperation()
         proc.setOperation(command)
         ctrlState = TCtrlState.cExpDone
         editor.write(proc.getLop_res.toString)
@@ -110,22 +113,22 @@ object Controller {
     ctrlState match {
       case TCtrlState.cStart => {
         proc.setRop(new WorkType(editor.read))
-        proc.runFunction(command)
+        saveFunction(command)
         editor.write(proc.getRop.toString)
         editor.read
       }
       case TCtrlState.cEditing => {
         proc.setRop(new WorkType(editor.read))
-        proc.runFunction(command)
+        saveFunction(command)
         ctrlState = TCtrlState.FunDone
         editor.write(proc.getRop.toString)
         editor.read
       }
       case TCtrlState.cExpDone => {
         editor.write(proc.getLop_res.toString)
-        proc.resetProc();
+        proc.resetProc()
         proc.setRop(new WorkType(editor.read))
-        proc.runFunction(command)
+        saveFunction(command)
         editor.write(proc.getRop.toString)
         ctrlState = TCtrlState.cStart
         editor.read
@@ -138,32 +141,48 @@ object Controller {
     ctrlState match {
       case TCtrlState.cEditing => {
         proc.setRop(new WorkType(editor.read))
-        proc.runOperation()
+        saveOperation()
         ctrlState = TCtrlState.cExpDone
         editor.write(proc.getLop_res.toString)
         editor.read
       }
       case TCtrlState.cExpDone => {
-        proc.runOperation()
+        saveOperation()
         editor.write(proc.getLop_res.toString)
         editor.read
       }
       case TCtrlState.cOpChange => {
         proc.setRop(proc.getLop_res)
-        proc.runOperation()
+        saveOperation()
         ctrlState = TCtrlState.cExpDone
         editor.write(proc.getLop_res.toString)
         editor.read
       }
       case TCtrlState.FunDone => {
         proc.setRop(new WorkType(editor.read))
-        proc.runOperation()
+        saveOperation()
         ctrlState = TCtrlState.cExpDone
         editor.write(proc.getLop_res.toString)
         editor.read
       }
       case _ => editor.read
     }
+  }
+
+  private def saveOperation(): Unit = {
+    val lop = proc.getLop_res
+    val rop = proc.getRop
+    val op = proc.getOperation
+    proc.runOperation()
+    val result = proc.getLop_res
+    history.addOperation(op, lop, rop, result)
+  }
+
+  private def saveFunction(command: Int) = {
+    val rop = proc.getRop
+    proc.runFunction(command)
+    val result = proc.getRop
+    history.addFunction(command, rop, result)
   }
 
   def clipboardCommand(command: String): String = {

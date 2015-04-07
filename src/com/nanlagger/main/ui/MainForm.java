@@ -56,7 +56,7 @@ public class MainForm extends JFrame {
         setContentPane(mainPanel);
         initButton();
         initTopMenu();
-        setSize(240, 350);
+        setSize(340, 300);
         setVisible(true);
 
         this.addWindowListener(new WindowAdapter() {
@@ -132,7 +132,15 @@ public class MainForm extends JFrame {
         viewVar2.setActionCommand("var2");
         viewVar1.addActionListener(topMenuButtonClick);
         viewVar2.addActionListener(topMenuButtonClick);
+        history.addActionListener(historyListener);
     }
+
+    private ActionListener historyListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            new History();
+        }
+    };
 
     private ActionListener speedButtonClick = new ActionListener() {
         @Override
