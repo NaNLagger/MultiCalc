@@ -4,6 +4,7 @@ import com.nanlagger.main.controllers.Controller;
 import com.nanlagger.main.entities.Commands;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -109,17 +110,20 @@ public class MainForm extends JFrame {
     public void initTopMenu() {
         setJMenuBar(topMenu);
         requestFocus();
-        JMenu file = new JMenu("<html><u>П</u>равка</html>");
+        JMenu file = new JMenu("Правка");
         JMenuItem copy = new JMenuItem("Копировать");
         JMenuItem insert = new JMenuItem("Вставить");
-        JMenu settings = new JMenu("<html><u>Н</u>астройки</html>");
+        JMenu settings = new JMenu("Настройки");
         JMenu view = new JMenu("Вид");
         JMenuItem viewVar1 = new JMenuItem("Целое");
         JMenuItem viewVar2 = new JMenuItem("Дробное");
+        JMenuItem history = new JMenuItem("История");
+        history.setForeground(Color.LIGHT_GRAY);
         file.add(copy);
         file.add(insert);
         topMenu.add(file);
         topMenu.add(settings);
+        topMenu.add(history);
         settings.add(view);
         view.add(viewVar1);
         view.add(viewVar2);
